@@ -5,6 +5,8 @@
 #include <cstdint>
 #include <cstdio>
 
+// https://blog.csdn.net/navyhu/article/details/45951853
+
 typedef std::uint32_t Elf32_Addr;
 typedef std::uint16_t Elf32_Half;
 typedef std::uint32_t Elf32_Off;
@@ -32,7 +34,7 @@ typedef std::uint32_t Elf32_Word;
 #define EM_MIPS 8 // Intel RS3000
 
 #define EI_NIDENT 16
-typedef struct {
+struct Elf32_Ehdr{
     unsigned char e_ident[EI_NIDENT];
     Elf32_Half e_type;
     Elf32_Half e_machine;
@@ -49,7 +51,7 @@ typedef struct {
     Elf32_Half e_shstrndx;
 
     void debug();
-}Elf32_Ehdr;
+};
 
 class ElfParser
 {

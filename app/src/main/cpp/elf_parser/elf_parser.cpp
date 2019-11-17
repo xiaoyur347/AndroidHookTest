@@ -1,10 +1,16 @@
 #include "elf_parser.h"
 #include <cstdint>
 
-
 void Elf32_Ehdr::debug()
 {
-    printf("e_ident=%s\n", e_ident);
+    printf("ehdr size=%lu\n", sizeof(Elf32_Ehdr));
+    if (e_ident[0] != 0x7f || e_ident[1] != 'E'
+        || e_ident[2] != 'L' || e_ident[3] != 'F')
+    {
+        printf("not elf file\n");
+    } else {
+        printf("elf file\n");
+    }
     printf("e_type=%d\n", e_type);
     printf("e_machine=%d\n", e_machine);
     printf("e_version=%d\n", e_version);
