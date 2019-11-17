@@ -43,12 +43,13 @@ struct Elf32_Ehdr{
     Elf32_Off e_phoff; // program header table offset
     Elf32_Off e_shoff; // section header table offset
     Elf32_Word e_flags;
-    Elf32_Half e_ehsize;
-    Elf32_Half e_phentsize;
-    Elf32_Half e_phnum;
-    Elf32_Half e_shentsize;
-    Elf32_Half e_shnum;
-    Elf32_Half e_shstrndx;
+    Elf32_Half e_ehsize; // ELF header的大小（bytes）
+    Elf32_Half e_phentsize; // Program Header table中每个表项（program header）的大小，PHT中所有表项大小相同
+    Elf32_Half e_phnum; // Program header table中的表项数量
+    Elf32_Half e_shentsize; // Section header table中每个表项（section header）的大小，SHT中所有表项大小相同
+    Elf32_Half e_shnum; // Section header table中表项数量
+    Elf32_Half e_shstrndx; // Section header table中有一表项是section name string table（节名字表）
+                           // 这个变量记录了此表项在SHT中的位置，如果文件中没有这个表项，则变量值为SHN_UNDEF
 
     void debug();
 };
