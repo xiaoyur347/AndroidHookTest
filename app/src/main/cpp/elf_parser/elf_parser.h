@@ -54,6 +54,21 @@ struct Elf32_Ehdr{
     void debug();
 };
 
+// section header
+struct Elf32_Shdr
+{
+    Elf32_Word sh_name; // section名字，但不是直接存储的名字，而是一个指向section header string table的一个index
+    Elf32_Word sh_type;
+    Elf32_Word sh_flags;
+    Elf32_Addr sh_addr; // 如果这个section会被加载到内存，这个成员就是此section在内存中的地址，否则为0
+    Elf32_Off sh_offset; // 此section相对于文件开始的偏移量（字节）
+    Elf32_Word sh_size; // section所占的空间大小（字节）
+    Elf32_Word sh_link; // 一个section header table index链接，含义取决于section类型
+    Elf32_Word sh_info; // 额外信息，含义取决于section类型
+    Elf32_Word sh_addralign; // 有些sections有地址对齐的限制，sh_addr模sh_addralign必须为0。 0和1都表示不用地址对齐
+    Elf32_Word sh_entsize; // 有些sections由一些固定大小的表项组成的表（比如符号表），对于这些sections，这个成员记录了每个表项的大小。对于不是这种类型的section，值为0
+};
+
 class ElfParser
 {
 public:
@@ -62,8 +77,11 @@ public:
     bool parse();
 
 private:
+    bool parseSectionHeaderTable();
+    bool parseProgramHeaderTable();
     std::string _fileName;
     FILE* _pFile;
+    Elf32_Ehdr _elfHeader;
 };
 
 #endif //ELF_PARSER_H

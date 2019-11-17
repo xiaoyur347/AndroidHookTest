@@ -42,7 +42,6 @@ ElfParser::~ElfParser()
     }
 }
 
-
 bool ElfParser::parse()
 {
     _pFile = fopen(_fileName.c_str(), "r");
@@ -51,13 +50,25 @@ bool ElfParser::parse()
         return false;
     }
 
-    Elf32_Ehdr ehdr;
-    if (1 != fread(&ehdr, sizeof(ehdr), 1, _pFile))
+    if (1 != fread(&_elfHeader, sizeof(_elfHeader), 1, _pFile))
     {
         return false;
     }
-    ehdr.debug();
+    _elfHeader.debug();
+
+    parseSectionHeaderTable();
+    parseProgramHeaderTable();
     return true;
+}
+
+bool ElfParser::parseSectionHeaderTable()
+{
+
+}
+
+bool ElfParser::parseProgramHeaderTable()
+{
+
 }
 
 
